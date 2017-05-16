@@ -7,12 +7,7 @@ screen_height = si_win.winfo_screenheight()
 
 si_win.geometry(str(screen_width) + "x" + str(screen_height))
 
-alien_types = {
-    'Boss':4,
-    'General':3,
-    'Lieutenant':2,
-    'Private':1,
-}
+alien_types = [1,2,3,4]
 coord_choices = [
     (70, 70),
     (500, 70),
@@ -20,15 +15,12 @@ coord_choices = [
 ]
 
 class Enemy:
-
+    global alien_types, coord_choices
     def __init__(self, alien_type):
-        try:
-            self.alien_type = int(alien_type)
-        except:
-            self.alien_type = int(alien_types[alien_type])
 
+        self.alien_type = int(alien_type)
         self.hp = self.alien_type * self.alien_type
-        self.photo = PhotoImage(file=("img/alien"+str(self.alien_type)+".gif"))
+        self.photo = PhotoImage(file="img/alien%s.gif" % alien_type)
         self.photo_display = self.photo.subsample(5,5)
         self.coords = random.choice(coord_choices)
         self.img_on = canvas.create_image(self.coords, image=self.photo_display)
@@ -45,8 +37,18 @@ class Enemy:
 canvas = Canvas(si_win)
 canvas.pack(expand=1, fill='both')
 
+def make_enemy(alien_type):
+    return Enemy(alien_type)
+# CREATE ALIEN INSTANCES HERE:
+def random_spawn():
+    global alien_types
+    alien_choice = random.choice(alien_types)
+    print("Alien chosen: %s" % alien_choice)
+    new_alien = make_enemy(4)
+    print('Enemy spawned: Class %d, Health %d' % (new_alien.alien_type, new_alien.hp))
 
-enemy1 = Enemy('General')
 
 
+
+random_spawn()
 si_win.mainloop()
