@@ -1,5 +1,5 @@
 from tkinter import *
-from os import system
+# from os import system
 
 root = Tk()
 
@@ -17,8 +17,7 @@ class MenuGui:
             Quits this window, starts new game
             """
             master.destroy()
-            system("python3 space_invaders/gamefile.py")
-
+            exec(open("space_invaders/gamefile.py").read())
         def content(game, desc):
             """
             :param game:
